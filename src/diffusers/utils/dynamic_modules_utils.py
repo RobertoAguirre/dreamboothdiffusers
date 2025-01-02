@@ -282,14 +282,16 @@ def get_cached_module_file(
         # community pipeline on GitHub
         github_url = COMMUNITY_PIPELINES_URL.format(revision=revision, pipeline=pretrained_model_name_or_path)
         try:
-            resolved_module_file = cached_download(
-                github_url,
+            resolved_module_file = hf_hub_download(
+                repo_id=pretrained_model_name_or_path,
+                filename=f"{pretrained_model_name_or_path}.py",
+                revision=revision,
                 cache_dir=cache_dir,
                 force_download=force_download,
                 proxies=proxies,
                 resume_download=resume_download,
                 local_files_only=local_files_only,
-                use_auth_token=False,
+                use_auth_token=False,  # o True, según requieras
             )
             submodule = "git"
             module_file = pretrained_model_name_or_path + ".py"
